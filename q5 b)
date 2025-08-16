@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter dimension of matrix: ";
+    cin >> n;
+
+    // space needed = 3n - 2
+    int size = 3*n - 2;
+    int tri[size];
+
+    cout << "Enter elements of tri-diagonal matrix:\n";
+    
+    // main diagonal
+    cout << "Enter " << n << " elements for main diagonal:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> tri[i];
+    }
+
+    // upper diagonal (n-1 elements)
+    cout << "Enter " << n-1 << " elements for upper diagonal:\n";
+    for (int i = 0; i < n-1; i++) {
+        cin >> tri[n + i];
+    }
+
+    // lower diagonal (n-1 elements)
+    cout << "Enter " << n-1 << " elements for lower diagonal:\n";
+    for (int i = 0; i < n-1; i++) {
+        cin >> tri[n + (n-1) + i];
+    }
+
+    cout << "\nThe tri-diagonal matrix is:\n";
+    int k = 0;  // pointer for diagonals
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j)               // main diagonal
+                cout << tri[i] << " ";
+            else if (i == j-1)        // upper diagonal
+                cout << tri[n + i] << " ";
+            else if (i == j+1)        // lower diagonal
+                cout << tri[n + (n-1) + j] << " ";
+            else
+                cout << 0 << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
