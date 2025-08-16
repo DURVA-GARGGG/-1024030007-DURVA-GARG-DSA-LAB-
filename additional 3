@@ -1,0 +1,51 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+int main()
+{
+	char c[]="listen";
+	char s[]="silent";
+	int n1=sizeof(c)/sizeof(c[0]);
+	int n2=sizeof(s)/sizeof(s[0]);
+	int i,j;
+	char temp;
+	
+	if(n1!=n2)
+	cout<<"can't be an anagram pair";
+	
+	for(i=0;i<n1-1;i++)
+	{
+		for(j=i+1;j<n1-1;j++)
+		{
+			if(c[i]>=c[j])
+			{
+				temp=c[i];
+				c[i]=c[j];
+				c[j]=temp;
+			}
+		}
+	}
+	for(i=0;i<n2-1;i++)
+	{
+		for(j=i+1;j<n2-1;j++)
+		{
+			if(s[i]>=s[j])
+			{
+				temp=s[i];
+				s[i]=s[j];
+				s[j]=temp;
+			}
+		}
+	}
+	for(i=0;i<n1;i++)
+	{
+		if(c[i]==s[i])
+		{
+			
+		}
+		else
+		cout<<"not an anagram pair";
+	}
+	cout<<"they form an anagram pair";
+	return 0;
+}
