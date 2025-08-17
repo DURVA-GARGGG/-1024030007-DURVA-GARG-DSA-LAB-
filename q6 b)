@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+struct Term {
+    int row, col, val;
+};
+
+int main() {
+    int m, n, numA, numB;
+    cout << "Enter rows and columns of matrices: ";
+    cin >> m >> n;
+
+    cout << "Enter number of non-zero elements in first matrix: ";
+    cin >> numA;
+    Term a[numA+1];
+    cout << "Enter row, column and value for each element:\n";
+    for (int i = 0; i < numA; i++)
+        cin >> a[i].row >> a[i].col >> a[i].val;
+
+    cout << "Enter number of non-zero elements in second matrix: ";
+    cin >> numB;
+    Term b[numB+1];
+    cout << "Enter row, column and value for each element:\n";
+    for (int i = 0; i < numB; i++)
+        cin >> b[i].row >> b[i].col >> b[i].val;
+
+    Term c[numA + numB+2]; // result
+    int i = 0, j = 0, k = 0;
+
+    while (i < numA && j < numB) {
+        if (a[i].row < b[j].row || (a[i].row == b[j].row && a[i].col < b[j].col)) {
+            c[k++] = a[i++];
+        }
+        else if (b[j].row < a[i].row || (b[j].row == a[i].row && b[j].col < a[i].col)) {
+            c[k++] = b[j++];
+        }
+        else { 
+            int sum = a[i].val + b[j].val;
+            if (sum != 0)//v v imp if addition is making sum=0,then why to store
+			{
+                c[k] = a[i];
+                c[k++].val = sum;
+            }
+            i++; j++;
+        }
+    }
+
+    // copy remaining terms
+    while (i < numA) c[k++] = a[i++];
+    while (j < numB) c[k++] = b[j++];
+
+    cout << "\nResultant Sparse Matrix (Triplet Form):\n";
+    cout << "Row  Col  Val\n";
+    for (int x = 0; x < k; x++)
+        cout << c[x].row << "    " << c[x].col << "    " << c[x].val << endl;
+
+    return 0;
+}
