@@ -1,0 +1,41 @@
+#include <iostream>
+#include <string>
+#include <stack>
+using namespace std;
+
+string postfixToInfix(string s)
+{
+	int i=0;
+	stack<string>st;
+	int n=s.length();
+	string t1,t2;
+	string ans;
+	
+	while(i<n)
+	{
+		if((s[i]>='A'&& s[i]<='Z') || (s[i]>='a'&& s[i]<='z') || (s[i]>='0'&& s[i]<='9'))
+		st.push(string(1, s[i]));
+		
+		else
+		{
+			t1=st.top();
+			st.pop();
+			t2=st.top();
+			st.pop();
+			
+		    ans = "(" + t2 + string(1, s[i]) + t1 + ")";
+			st.push(ans);
+			
+		}
+		i++;
+	}
+	return st.top();
+}
+int main()
+{
+	string b;
+	getline(cin,b);
+	string ans=postfixToInfix(b);
+	cout << "Infix expression: " << ans << endl;
+	return 0;
+}
