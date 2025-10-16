@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+void splitList(Node* head, Node* head1_ref, Node* head2_ref) {
+    Node* slow = head;
+    Node* fast = head;
+
+    if (head == NULL)
+        return;
+
+    while (fast->next != head && fast->next->next != head) {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+
+    // For even number of nodes, move fast one more step
+    if (fast->next->next == head)
+        fast = fast->next;
+
+    *head1_ref = head;
+    *head2_ref = slow->next;
+
+    fast->next = slow->next; 
+    slow->next = head;       
+}
+
