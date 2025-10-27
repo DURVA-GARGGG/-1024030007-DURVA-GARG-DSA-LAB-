@@ -1,0 +1,289 @@
+#include <iostream>
+using namespace std;
+
+struct node {
+    int data;
+    node *next;
+    node *prev;
+};
+
+node *head = NULL, *last = NULL;
+
+void insertFirstDLL(int val) {
+    node *newnode = new node;
+    newnode->data = val;
+    newnode->prev = NULL;
+    newnode->next = head;
+    if (head != NULL)
+        head->prev = newnode;
+    else
+        last = newnode;
+    head = newnode;
+}
+
+void insertLastDLL(int val) {
+    node *newnode = new node;
+    newnode->data = val;
+    newnode->next = NULL;
+    newnode->prev = last;
+    if (last != NULL)
+        last->next = newnode;
+    else
+        head = newnode;
+    last = newnode;
+}
+
+void insertAfterDLL(int key, int val) {
+    node *temp = head;
+    while (temp && temp->data != key)
+        temp = temp->next;
+    if (temp == NULL) {
+        cout << "Node not found!\n";
+        return;
+    }
+    node *newnode = new node;
+    newnode->data = val;
+    newnode->next = temp->next;
+    newnode->prev = temp;
+    if (temp->next)
+        temp->next->prev = newnode;
+    else
+        last = newnode;
+    temp->next = newnode;
+}
+
+void insertBeforeDLL(int key, int val) {
+    node *temp = head;
+    while (temp && temp->data != key)
+        temp = temp->next;
+    if (temp == NULL) {
+        cout << "Node not found!\n";
+        return;
+    }
+    node *newnode = new node;
+    newnode->data = val;
+    newnode->next = temp;
+    newnode->prev = temp->prev;
+    if (temp->prev)
+        temp->prev->next = newnode;
+    else
+        head = newnode;
+    temp->prev = newnode;
+}
+
+void deleteNodeDLL(int key) {
+    node *temp = head;
+    while (temp && temp->data != key)
+        temp = temp->next;
+    if (temp == NULL) {
+        cout << "Node not found!\n";
+        return;
+    }
+    if (temp == head)
+        head = head->next;
+    if (temp == last)
+        last = last->prev;
+    if (temp->prev)
+        temp->prev->next = temp->next;
+    if (temp->next)
+        temp->next->prev = temp->prev;
+    delete temp;
+    cout << "Node " << key << " deleted.\n";
+}
+
+void searchNodeDLL(int key) {
+    node *temp = head;
+    int pos = 1;
+    while (temp) {
+        if (temp->data == key) {
+            cout << "Node " << key << " found at position " << pos << ".\n";
+            return;
+        }
+        temp = temp->next;
+        pos++;
+    }
+    cout << "Node not found!\n";
+}
+
+void displayDLL() {
+    if (head == NULL) {
+        cout << "List is empty!\n";
+        return;
+    }
+    node *temp = head;
+    cout << "Doubly Linked List: ";
+    while (temp) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+node *headC = NULL;
+
+void insertFirstCLL(int val) {
+    node *newnode = new node;
+    newnode->data = val;
+    if (headC == NULL) {
+        headC = newnode;
+        newnode->next = headC;
+    } else {
+        node *temp = headC;
+        while (temp->next != headC)
+            temp = temp->next;
+        temp->next = newnode;
+        newnode->next = headC;
+        headC = newnode;
+    }
+}
+
+void insertLastCLL(int val) {
+    node *newnode = new node;
+    newnode->data = val;
+    if (headC == NULL) {
+        headC = newnode;
+        newnode->next = headC;
+    } else {
+        node *temp = headC;
+        while (temp->next != headC)
+            temp = temp->next;
+        temp->next = newnode;
+        newnode->next = headC;
+    }
+}
+
+void deleteNodeCLL(int key) {
+    if (headC == NULL) {
+        cout << "List is empty!\n";
+        return;
+    }
+    node *temp = headC, *prev = NULL;
+    while (temp->data != key) {
+        prev = temp;
+        temp = temp->next;
+        if (temp == headC) {
+            cout << "Node not found!\n";
+            return;
+        }
+    }
+    if (temp == headC && temp->next == headC) {
+        headC = NULL;
+    } else if (temp == headC) {
+        node *last = headC;
+        while (last->next != headC)
+            last = last->next;
+        headC = headC->next;
+        last->next = headC;
+    } else {
+        prev->next = temp->next;
+    }
+    delete temp;
+    cout << "Node " << key << " deleted.\n";
+}
+
+void searchNodeCLL(int key) {
+    if (headC == NULL) {
+        cout << "List is empty!\n";
+        return;
+    }
+    node *temp = headC;
+    int pos = 1;
+    do {
+        if (temp->data == key) {
+            cout << "Node " << key << " found at position " << pos << ".\n";
+            return;
+        }
+        temp = temp->next;
+        pos++;
+    } while (temp != headC);
+    cout << "Node not found!\n";
+}
+
+void displayCLL() {
+    if (headC == NULL) {
+        cout << "List is empty!\n";
+        return;
+    }
+    node *temp = headC;
+    cout << "Circular Linked List: ";
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != headC);
+    cout << endl;
+}
+
+int main() {
+    int choice, type, val, key;
+    cout << "1. Doubly Linked List\n2. Circular Linked List\nEnter type: ";
+    cin >> type;
+
+    do {
+        cout << "\n------ MENU ------\n";
+        cout << "1. Insert at Beginning\n";
+        cout << "2. Insert at End\n";
+        cout << "3. Insert After a Node (DLL only)\n";
+        cout << "4. Insert Before a Node (DLL only)\n";
+        cout << "5. Delete a Node\n";
+        cout << "6. Search a Node\n";
+        cout << "7. Display List\n";
+        cout << "8. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value: ";
+                cin >> val;
+                if (type == 1) insertFirstDLL(val);
+                else insertFirstCLL(val);
+                break;
+            case 2:
+                cout << "Enter value: ";
+                cin >> val;
+                if (type == 1) insertLastDLL(val);
+                else insertLastCLL(val);
+                break;
+            case 3:
+                if (type == 1) {
+                    cout << "Enter key & new value: ";
+                    cin >> key >> val;
+                    insertAfterDLL(key, val);
+                } else
+                    cout << "Not available for CLL.\n";
+                break;
+            case 4:
+                if (type == 1) {
+                    cout << "Enter key & new value: ";
+                    cin >> key >> val;
+                    insertBeforeDLL(key, val);
+                } else
+                    cout << "Not available for CLL.\n";
+                break;
+            case 5:
+                cout << "Enter value to delete: ";
+                cin >> key;
+                if (type == 1) deleteNodeDLL(key);
+                else deleteNodeCLL(key);
+                break;
+            case 6:
+                cout << "Enter value to search: ";
+                cin >> key;
+                if (type == 1) searchNodeDLL(key);
+                else searchNodeCLL(key);
+                break;
+            case 7:
+                if (type == 1) displayDLL();
+                else displayCLL();
+                break;
+            case 8:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice!\n";
+        }
+    } while (choice != 8);
+
+    return 0;
+}
+
