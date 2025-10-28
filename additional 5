@@ -1,0 +1,42 @@
+struct Node {
+    int coeff;
+    int pow;
+    Node* next;
+    Node(int c, int p) : coeff(c), pow(p), next(NULL) {}
+};
+
+Node* addPolynomial(Node* head1, Node* head2) {
+    Node* temp1 = head1;
+    Node* temp2 = head2;
+    Node* dummy = new Node(-1,-1);
+    Node* curr = dummy;
+
+    while (temp1 && temp2) {
+        if (temp1->pow == temp2->pow) {
+            int sumCoeff = temp1->coeff + temp2->coeff;
+            curr->next = new Node(sumCoeff,temp1->pow);
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        } else if (temp1->pow > temp2->pow) {
+            curr->next = new Node(temp1->coeff, temp1->pow);
+            temp1 = temp1->next;
+        } else {
+            curr->next = new Node(temp2->coeff, temp2->pow);
+            temp2 = temp2->next;
+        }
+        curr = curr->next;
+    }
+
+    while (temp1) {
+        curr->next = new Node(temp1->coeff,temp1->pow);
+        temp1 = temp1->next;
+        curr = curr->next;
+    }
+    while (temp2) {
+        curr->next = new Node(temp2->coeff, temp2->pow);
+        temp2 = temp2->next;
+        curr = curr->next;
+    }
+
+    return dummy->next;
+}
