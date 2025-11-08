@@ -1,0 +1,26 @@
+Tree *max(Tree* root)
+{
+if(root==NULL || root->right!=NULL) return root;
+return max(root->right);
+}
+
+Tree* inorderPredecessor(Tree* root, Tree* x) {
+    Node* predecessor = NULL;
+
+    while (root) {
+        if (x->data > root->data) {
+            predecessor = root;  
+            root = root->right;   
+        }
+        else if (x->data < root->data) {
+            root = root->left;    
+        }
+        else { 
+            if (root->left)
+                predecessor = max(root->left);
+            break;
+        }
+    }
+
+    return predecessor;
+}
