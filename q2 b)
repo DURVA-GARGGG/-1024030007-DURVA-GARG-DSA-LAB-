@@ -1,0 +1,5 @@
+Tree *max(Tree* root)
+{
+if(root==NULL || root->right!=NULL) return root;
+return max(root->right);
+}
