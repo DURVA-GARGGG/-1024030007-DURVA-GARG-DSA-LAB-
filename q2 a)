@@ -1,0 +1,29 @@
+Tree* searchR(Tree* root, int x)
+{
+    if (root == NULL || root->data == x)
+        return root;
+
+    if (x < root->data)
+        return searchR(root->left, x);
+    else
+        return searchR(root->right, x);
+}
+
+
+Tree* searchI(Tree* root, int x)
+{
+    while (root != NULL)
+    {
+        if (x == root->data)
+        {
+            printf("found\n");
+            return root;  
+        }
+        else if (x < root->data)
+            root = root->left;
+        else
+            root = root->right;
+    }
+
+    return NULL;  
+}
