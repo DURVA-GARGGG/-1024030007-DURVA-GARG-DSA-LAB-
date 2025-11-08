@@ -1,0 +1,26 @@
+Tree* min(Tree* root)
+{
+if(root==NULL || root->left!=NULL) return root;
+return max(root->left);
+}
+
+Tree* inorderSuccessor(Tree* root, Tree* x) {
+    Node* successor = NULL;
+
+    while (root) {
+        if (x->data < root->data) {
+            successor = root;   
+            root = root->left;  
+        }
+        else if (x->data > root->data) {
+            root = root->right;
+        }
+        else { 
+            if (root->right)
+                successor = min(root->right);
+            break;
+        }
+    }
+
+    return successor;
+}
