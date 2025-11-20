@@ -1,0 +1,41 @@
+struct TreeList {
+    Node* arr[100];  
+    int size;
+};
+
+TreeList generate(int start, int end) {
+    TreeList result;
+    result.size = 0;
+
+    if (start > end) {
+        result.arr[result.size++] = NULL;
+        return result;
+    }
+
+    for (int rootVal = start; rootVal <= end; rootVal++) {
+
+        TreeList leftTrees  = generate(start, rootVal - 1);
+        TreeList rightTrees = generate(rootVal + 1, end);
+
+        for (int i = 0; i < leftTrees.size; i++) {
+            for (int j = 0; j < rightTrees.size; j++) {
+
+                Node* root = new Node(rootVal);
+                root->left  = leftTrees.arr[i];
+                root->right = rightTrees.arr[j];
+
+                result.arr[result.size++] = root;
+            }
+        }
+    }
+    return result;
+}
+
+TreeList generateTrees(int n) {
+    if (n == 0) {
+        TreeList emptyList;
+        emptyList.size = 0;
+        return emptyList;
+    }
+    return generate(1, n);
+}
