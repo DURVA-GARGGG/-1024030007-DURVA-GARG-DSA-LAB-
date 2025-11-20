@@ -1,0 +1,24 @@
+//For each level in level-order traversal, the last node of that level is part of the right view.
+
+vector<int> rightView(Node* root) {
+    vector<int> result;
+    if (!root) return result;
+
+    queue<Node*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+        int levelSize = q.size();
+        Node* curr = NULL;
+
+        for (int i = 0; i < levelSize; i++) {
+            curr = q.front();
+            q.pop();
+
+            if (curr->left)  q.push(curr->left);
+            if (curr->right) q.push(curr->right);
+        }
+        result.push_back(curr->data);
+    }
+    return result;
+}
