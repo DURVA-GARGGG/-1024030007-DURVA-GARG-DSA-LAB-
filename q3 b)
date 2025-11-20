@@ -1,0 +1,25 @@
+Node* findMin(Node* root) {
+    while (root && root->left)
+        root = root->left;
+    return root;
+}
+
+Node* deleteNode(Node* root, int x) {
+    if (!root) return NULL;
+
+    if (x < root->val)
+        root->left = deleteNode(root->left, x);
+    else if (x > root->val)
+        root->right = deleteNode(root->right, x);
+    else {
+        // 1 child or no child
+        if (!root->left) return root->right;
+        if (!root->right) return root->left;
+
+        // 2 children 
+        Node* temp = findMin(root->right);
+        root->val = temp->val;
+        root->right = deleteNode(root->right, temp->val);
+    }
+    return root;
+}
