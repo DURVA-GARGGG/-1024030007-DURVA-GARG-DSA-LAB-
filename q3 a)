@@ -1,0 +1,10 @@
+Node* insertNode(Node* root, int x) {
+    if (root == NULL) return new Node(x);
+
+    if (x < root->val)
+        root->left = insertNode(root->left, x);
+    else if (x > root->val)
+        root->right = insertNode(root->right, x);
+
+    return root;
+}
