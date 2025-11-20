@@ -1,0 +1,49 @@
+void bstToDLL(Node* root, DLLNode* &head, DLLNode* &prev) {
+    if (root == NULL) return;
+
+    bstToDLL(root->left, head, prev);
+
+    DLLNode* curr = new DLLNode();
+    curr->key = root->key;
+    curr->prev = prev;
+    curr->next = NULL;
+
+    if (prev != NULL) prev->next = curr;
+    else head = curr; // first node
+
+    prev = curr;
+
+    bstToDLL(root->right, head, prev);
+}
+
+DLLNode* mergeDLL(DLLNode* h1, DLLNode* h2) {
+    if (!h1) return h2;
+    if (!h2) return h1;
+
+    DLLNode* head = NULL;
+    DLLNode* tail = NULL;
+
+    while (h1 && h2) {
+        DLLNode* pick;
+        if (h1->key < h2->key) {
+            pick = h1;
+            h1 = h1->next;
+        } else {
+            pick = h2;
+            h2 = h2->next;
+        }
+
+        pick->prev = tail;
+
+        if (tail) tail->next = pick;
+        else head = pick; // first node
+
+        tail = pick;
+    }
+
+    // Attach the remaining list
+    if (h1) h1->prev = tail, tail->next = h1;
+    if (h2) h2->prev = tail, tail->next = h2;
+
+    return head;
+}
