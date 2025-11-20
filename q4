@@ -1,0 +1,18 @@
+bool isBSTdef(Node* root, int &prev) {
+    if (root == NULL) return true;
+
+    // Left subtree
+    if (!isBSTdef(root->left, prev)) return false;
+
+    // Check current node
+    if (root->data <= prev) return false; 
+    prev = root->data;
+
+    // Right subtree
+    return isBSTdef(root->right, prev);
+}
+
+bool isBST(Node* root) {
+    int prev = INT_MIN;
+    return isBSTUtil(root, prev);
+}
