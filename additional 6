@@ -1,0 +1,27 @@
+// Search root position in inorder
+int search(int inorder[], int start, int end, int value) {
+    for (int i = start; i <= end; i++) {
+        if (inorder[i] == value)
+            return i;
+    }
+    return -1;
+}
+
+Node* buildTree(int inorder[], int postorder[], int inStart, int inEnd, int &postIndex) {
+    if (inStart > inEnd)
+        return NULL;
+
+    // Last element in postorder is root
+    Node* root = new Node();
+    root->data = postorder[postIndex];
+    root->left = root->right = NULL;
+    postIndex--;
+
+    int pos = search(inorder, inStart, inEnd, root->data);
+
+    // Build right subtree FIRST
+    root->right = buildTree(inorder, postorder, pos + 1, inEnd, postIndex);
+    root->left  = buildTree(inorder, postorder, inStart, pos - 1, postIndex);
+
+    return root;
+}
