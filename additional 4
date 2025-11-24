@@ -1,0 +1,20 @@
+int countStudents(vector<int>& students, vector<int>& sandwiches) {
+    int wantZero = 0, wantOne = 0;
+
+    for(int s : students){
+        if(s == 0) wantZero++;
+        else wantOne++;
+    }
+
+    for(int s : sandwiches){
+        if(s == 0){
+            if(wantZero == 0) return wantOne;  
+            wantZero--;
+        } else {
+            if(wantOne == 0) return wantZero;  
+            wantOne--;
+        }
+    }
+
+    return 0; 
+}
