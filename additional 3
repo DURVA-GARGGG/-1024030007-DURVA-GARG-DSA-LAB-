@@ -1,0 +1,18 @@
+vector<int> maxSumCombination(vector<int>& a, vector<int>& b, int k) {
+    int n = a.size();
+    vector<int> allSums;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            allSums.push_back(a[i] + b[j]);
+        }
+    }
+
+    sort(allSums.begin(), allSums.end(), greater<int>());
+
+    vector<int> ans;
+    for (int i = 0; i < k; i++)
+        ans.push_back(allSums[i]);
+
+    return ans;
+}
