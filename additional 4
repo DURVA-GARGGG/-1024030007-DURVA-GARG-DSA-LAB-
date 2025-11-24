@@ -1,0 +1,14 @@
+void fixRandom(Node* head) {
+    if (!head) return;
+    Node* curr = head;
+
+    while (curr) {
+        Node* expected = curr->next;  
+
+        if (curr->random != expected) {
+            curr->random = expected;
+            return;    
+        }
+        curr = curr->next;
+    }
+}
