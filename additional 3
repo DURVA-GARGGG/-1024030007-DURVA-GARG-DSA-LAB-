@@ -1,0 +1,25 @@
+bool checkSorted(queue<int> q) {
+    stack<int> st;
+    int expected = 1;
+    int n = q.size();
+
+    while (!q.empty()) {
+        int front = q.front();
+        q.pop();
+        if (front == expected) {
+            expected++;
+        } 
+        else {
+            if (!st.empty() && st.top() < front) 
+                return false;
+
+            st.push(front);
+        }
+
+        while (!st.empty() && st.top() == expected) {
+            st.pop();
+            expected++;
+        }
+    }
+    return (expected == n + 1);
+}
