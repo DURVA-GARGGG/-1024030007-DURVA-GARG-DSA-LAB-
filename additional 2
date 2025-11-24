@@ -1,0 +1,56 @@
+Node* reverseKGroupCircular(Node* head, int k) {
+
+    if (!head || k == 1) return head;
+
+    // make list circular
+    Node* tail = head;
+    while (tail->next) tail = tail->next;
+    tail->next = head;
+
+    int n = 1;
+    Node* temp = head->next;
+    while (temp != head) {
+        n++;
+        temp = temp->next;
+    }
+
+    // Reverse in K-groups 
+    Node* curr = head;
+    Node* newHead = NULL;
+    Node* prevGroupEnd = NULL;
+    int done = 0;
+
+    while (done + k <= n) {
+        Node* prev = NULL;
+        Node* blockStart = curr;
+        int cnt = 0;
+
+        while (cnt < k) {
+            Node* nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
+            cnt++;
+        }
+
+        // prev = head of this reversed block
+        if (!newHead) 
+            newHead = prev;
+
+        if (prevGroupEnd)
+            prevGroupEnd->next = prev;
+
+        // connect end of block to next part
+        blockStart->next = curr;
+        prevGroupEnd = blockStart;
+
+        done += k;
+    }
+
+    // break circular ll created earlier
+    Node* finalTail = newHead;
+    for (int i = 1; i < n; i++) finalTail = finalTail->next;
+    finalTail->next = NULL;
+
+    return newHead;
+}
