@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int findMinIndex(queue<int> &q, int n) {
+    int minVal = INT_MAX;
+    int minIndex = -1;
+
+    for (int i = 0; i < n; i++) {
+        int curr = q.front();
+        q.pop();
+
+        if (curr < minVal) {
+            minVal = curr;
+            minIndex = i;
+        }
+       q.push(curr);
+    }
+    return minIndex;
+}
+
+void moveMinToRear(queue<int> &q, int minIndex) {
+    int n = q.size();
+    int minVal;
+
+    for (int i = 0; i < n; i++) {
+        int curr = q.front();
+        q.pop();
+
+        if (i == minIndex)
+            minVal = curr;
+        else
+            q.push(curr);
+    }
+   q.push(minVal);
+}
+void sortQueue(queue<int> &q) {
+    int n = q.size();
+
+    for (int i = 0; i < n; i++) {
+        int minIndex = findMinIndex(q, n - i);
+        moveMinToRear(q, minIndex);
+    }
+}
+
+
