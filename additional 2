@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> topK(vector<int>& arr, int k) {
+    unordered_map<int, int> freq;
+
+    for (int x : arr)
+        freq[x]++;
+
+    vector<pair<int,int>> v;   // {num, frequency}
+    for (auto &p : freq)
+        v.push_back({p.first, p.second});
+
+    // Custom sort:
+    // 1) Higher frequency first
+    // 2) If freq same → larger number first
+    sort(v.begin(), v.end(), [](auto &a, auto &b) {
+        if (a.second == b.second)
+            return a.first > b.first;      // larger number first
+        return a.second > b.second;        // higher freq first
+    });
+
+    // Pick first k elements (only numbers)
+    vector<int> ans;
+    for (int i = 0; i < k; i++)
+        ans.push_back(v[i].first);
+
+    return ans;
+}
+
