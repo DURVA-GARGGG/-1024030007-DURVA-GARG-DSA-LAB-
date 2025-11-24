@@ -1,0 +1,45 @@
+Node* reverseInGroups(Node* head, int k) {
+    if (!head || k <= 1) return head;
+
+    Node* curr = head;
+    Node* newHead = NULL;
+    Node* lastGroupTail = NULL;
+
+    while (curr) {
+
+        Node* groupStart = curr;
+        Node* temp = curr;
+        int count = 0;
+
+        while (count < k && temp) {
+            temp = temp->next;
+            count++;
+        }
+
+        Node* prev = temp;
+        Node* nextNode = NULL;
+        Node* blockTail = curr;
+
+        for (int i = 0; i < count; i++) {
+            nextNode = curr->next;
+
+            curr->next = prev;
+            curr->prev = nextNode;
+
+            prev = curr;
+            curr = nextNode;
+        }
+
+        if (!newHead)
+            newHead = prev;
+
+        if (lastGroupTail) {
+            lastGroupTail->next = prev;
+            prev->prev = lastGroupTail;
+        }
+
+        lastGroupTail = blockTail;
+    }
+
+    return newHead;
+}
