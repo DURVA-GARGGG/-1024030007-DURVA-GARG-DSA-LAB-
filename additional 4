@@ -1,0 +1,25 @@
+void sortEvenOddPlaced(vector<int>& arr) {
+    vector<int> evenPos, oddPos;
+
+    for (int i = 0; i < arr.size(); i++) {
+        if (i % 2 == 0)
+            evenPos.push_back(arr[i]);
+        else
+            oddPos.push_back(arr[i]);
+    }
+
+    // Sort even indices in ascending
+    sort(evenPos.begin(), evenPos.end());
+
+    // Sort odd indices in descending
+    sort(oddPos.begin(), oddPos.end(), greater<int>());
+
+    // Merge back: even ones first, then odd ones
+    int idx = 0;
+
+    for (int x : evenPos)
+        arr[idx++] = x;
+
+    for (int x : oddPos)
+        arr[idx++] = x;
+}
