@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class UpperTriangular {
+    int n;
+    vector<int> arr;
+
+public:
+    UpperTriangular(int n) {
+        this->n = n;
+        arr.resize(n * (n + 1) / 2);
+    }
+
+    void set(int i, int j, int val) {
+        if (i <= j) {
+            int index = i * n - (i * (i - 1)) / 2 + (j - i);
+            arr[index] = val;
+        }
+    }
+
+    int get(int i, int j) {
+        if (i <= j) {
+            int index = i * n - (i * (i - 1)) / 2 + (j - i);
+            return arr[index];
+        }
+        return 0; 
+    }
+};
